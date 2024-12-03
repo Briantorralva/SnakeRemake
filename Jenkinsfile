@@ -1,6 +1,6 @@
 pipeline {   
     agent any
-            
+
     tools {
         jdk 'JDK11'
         maven 'M3'
@@ -21,7 +21,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'master',
-                url: 'https://github.com/Briantorralva/SnakeRemake.git'
+                    url: 'https://github.com/Briantorralva/SnakeRemake.git'
             }
         }
         
@@ -35,15 +35,20 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh '''
-                    mvn test
+                sh 'mvn test'
+            }
+            post {
+                always {
                     junit '**/target/surefire-reports/*.xml'
-                '''
+                }
             }
         }
     }
     
     post {
+        always {
+            echo 'Pipeline finished'
+        }
         success {
             echo 'Build and tests completed successfully!'
             emailext(
@@ -65,10 +70,6 @@ pipeline {
                 to: "briantorralva@gmail.com",
                 mimeType: 'text/html'
             )
-        }
-         
-        always {
-            echo 'Pipeline finished'
         }
     }
 }
