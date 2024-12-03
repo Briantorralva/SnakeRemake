@@ -1,4 +1,4 @@
-package org.psnbtech;
+package test.java.org.psnbtech;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

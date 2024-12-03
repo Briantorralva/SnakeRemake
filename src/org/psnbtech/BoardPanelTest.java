@@ -1,13 +1,10 @@
-package test.java.org.psnbtech;
+package org.psnbtech;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.psnbtech.BoardPanel;
-import org.psnbtech.SnakeGame;
-import org.psnbtech.TileType;
 
 class BoardPanelTest {
 
@@ -43,4 +40,3 @@ class BoardPanelTest {
     }
 
 }
-
