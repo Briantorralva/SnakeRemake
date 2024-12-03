@@ -1,11 +1,11 @@
-pipeline {
+pipeline {   
     agent any
-    
+            
     tools {
         jdk 'JDK11'
         maven 'M3'
     }
-    
+             
     stages {
         stage('Environment') {
             steps {
@@ -17,11 +17,11 @@ pipeline {
                 '''
             }
         }
-        
+             
         stage('Checkout') {
             steps {
-                git branch: 'master', 
-                    url: 'https://github.com/Briantorralva/SnakeRemake.git'
+                git branch: 'master',
+                url: 'https://github.com/Briantorralva/SnakeRemake.git'
             }
         }
         
@@ -31,46 +31,45 @@ pipeline {
                 sh 'mvn clean compile'
             }
         }
-        
+         
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'mvn test'
-            }
-            post {
-                always {
+                sh '''
+                    mvn test
                     junit '**/target/surefire-reports/*.xml'
-                }
+                '''
             }
         }
     }
-}
-post {
-    success {
-        echo 'Build and tests completed successfully!'
-        emailext(
-            subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-            body: """<p>SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                     <p>Check console output at <a href='${env.BUILD_URL}'>Console Output</a>.</p>""",
-            to: "briantorralva@gmail.com",
-            from: "jenkins@example.com",
-            mimeType: 'text/html'
-        )
-    }
-
-    failure {
-        echo 'Build or tests failed!'
-        emailext(
-            subject: "FAILED: Snake Game Build ${env.BUILD_NUMBER}",
-            body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                     <p>Check console output at <a href='${env.BUILD_URL}'>Console Output</a>.</p>""",
-            to: "briantorralva@gmail.com",
-            mimeType: 'text/html'
-        )
-    }
-            
-    always {
-        echo 'Pipeline finished'
+    
+    post {
+        success {
+            echo 'Build and tests completed successfully!'
+            emailext(
+                subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                body: """<p>SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                         <p>Check console output at <a href='${env.BUILD_URL}'>Console Output</a>.</p>""",
+                to: "briantorralva@gmail.com",
+                from: "jenkins@example.com",
+                mimeType: 'text/html'
+            )
+        }    
+        
+        failure {
+            echo 'Build or tests failed!'  
+            emailext(
+                subject: "FAILED: Snake Game Build ${env.BUILD_NUMBER}",
+                body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                         <p>Check console output at <a href='${env.BUILD_URL}'>Console Output</a>.</p>""",
+                to: "briantorralva@gmail.com",
+                mimeType: 'text/html'
+            )
+        }
+         
+        always {
+            echo 'Pipeline finished'
+        }
     }
 }
 
