@@ -1,5 +1,4 @@
-package test.java.org.psnbtech;
-
+package org.psnbtech;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -18,14 +17,16 @@ public class SidePanelTest {
 
     @BeforeEach
     void setUp() {
-        game = new SnakeGame(); // Ensure you have a default constructor or a mock ready.
+        game = new SnakeGame();
         sidePanel = new SidePanel(game);
     }
 
     @Test
     void testPanelProperties() {
         assertNotNull(sidePanel, "SidePanel should not be null");
-        assertEquals(new Dimension(300, BoardPanel.ROW_COUNT * BoardPanel.TILE_SIZE), sidePanel.getPreferredSize(), "Dimensions should match expected");
+        assertEquals(new Dimension(300, BoardPanel.ROW_COUNT * BoardPanel.TILE_SIZE), 
+                     sidePanel.getPreferredSize(), 
+                     "Dimensions should match expected");
         assertEquals(Color.BLACK, sidePanel.getBackground(), "Background color should be black");
     }
 }
